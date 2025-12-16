@@ -1,0 +1,166 @@
+==========================================================
+    SIMULADOR DE CONCORRÊNCIA COM MONITORIZAÇÃO
+==========================================================
+
+
+### 3.1 SIMULADOR DE CONCORRÊNCIA ###
+
+== RaceConditionDemo: unsynchronized ==
+Expected value: 1000 Actual: 847
+[Monitor detecta múltiplas RACE_DETECTED entre threads]
+
+== RaceConditionDemo: synchronized (with locks) ==
+Expected value: 1000 Actual: 1000
+[Todas as operações protegidas, sem race conditions]
+
+== DeadlockDemo: creating deadlock ==
+[Monitor detecta POTENTIAL_DEADLOCK]
+[Monitor detecta DEADLOCK_DETECTED]
+If threads are stuck, a deadlock occurred (check monitor.log).
+
+== DeadlockDemo: corrected (global lock ordering) ==
+[Todas as threads completam sem deadlock]
+
+== StarvationDemo: creating potential starvation ==
+[Monitor detecta STARVATION_PATTERN thread=X waited=3200 ms]
+Starvation scenario finished (check monitor.log for STARVATION entries).
+
+== StarvationDemo: corrected (fair lock) ==
+[Fair lock previne starvation, todas as threads têm acesso equitativo]
+
+
+### 3.3 PERSPETIVA DE CIBERSEGURANÇA ###
+
+
+--- 3.3.1 Race Conditions: Privilege Escalation & Data Corruption ---
+
+== PrivilegeEscalationDemo: VULNERABLE (race condition allows privilege bypass) ==
+[SECURITY BREACH] attacker escalated privileges to admin!
+[SECURITY BREACH] attacker escalated privileges to admin!
+[SECURITY BREACH] attacker escalated privileges to admin!
+...
+Final user state: isAdmin=false (should be false if secure)
+[Monitor detecta múltiplas RACE_DETECTED em privilege_check]
+
+== PrivilegeEscalationDemo: SECURE (synchronized privilege checks) ==
+[BLOCKED] attacker-sync attempted privilege escalation (synchronized)
+[BLOCKED] attacker-sync attempted privilege escalation (synchronized)
+...
+Secure scenario completed - no unauthorized privilege escalation
+
+== PrivilegeEscalationDemo: DATA CORRUPTION via race condition ==
+transaction-0 withdrew 100, balance=900
+transaction-1 withdrew 200, balance=800
+transaction-2 withdrew 300, balance=700
+transaction-3 withdrew 400, balance=600
+transaction-4 withdrew 500, balance=500
+[DATA CORRUPTION] Expected balance: -500, Actual: 500 (data lost due to race condition)
+
+
+--- 3.3.2 Deadlocks: Denial of Service (DoS) Attacks ---
+
+== DenialOfServiceDemo: DoS via deliberate deadlock ==
+[ATTACK] attacker-1 locked database resource
+[ATTACK] attacker-2 locked network resource
+[DoS IMPACT] service-0 request failed - service blocked!
+[DoS IMPACT] service-1 request failed - service blocked!
+[DoS IMPACT] service-2 request failed - service blocked!
+...
+[Monitor detecta POTENTIAL_DEADLOCK entre database e network]
+[Monitor detecta DEADLOCK_DETECTED]
+[DoS RESULT] Successful requests: 2, Failed requests: 13
+[DoS RESULT] Service availability compromised due to deadlock attack!
+
+== DenialOfServiceDemo: MITIGATED (timeout-based locks) ==
+[TIMEOUT] service-mitigated-1 couldn't acquire network - retry later
+...
+[MITIGATED] Successful requests: 42, Failed requests: 8
+[MITIGATED] Service remained available despite contention
+
+== DenialOfServiceDemo: Resource exhaustion attack ==
+[ATTACK] resource-hog-0 holding resource-0 indefinitely
+[ATTACK] resource-hog-1 holding resource-1 indefinitely
+[ATTACK] resource-hog-2 holding resource-2 indefinitely
+[BLOCKED] Resource-0 unavailable - DoS in effect!
+[BLOCKED] Resource-1 unavailable - DoS in effect!
+[BLOCKED] Resource-2 unavailable - DoS in effect!
+Resource exhaustion attack completed
+
+
+--- 3.3.3 Starvation: Critical Service Delays & Security Failures ---
+
+== CriticalServiceStarvationDemo: VULNERABLE (security service starved) ==
+[DETECTED] Security event intrusion-0 processed (delay: 850ms)
+[MISSED] Security event intrusion-1 too old (delay: 1120ms) - SECURITY FAILURE!
+[DETECTED] Security event intrusion-2 processed (delay: 420ms)
+[MISSED] Security event intrusion-3 too old (delay: 1580ms) - SECURITY FAILURE!
+[MISSED] Security event intrusion-4 too old (delay: 2100ms) - SECURITY FAILURE!
+...
+[Monitor detecta STARVATION_PATTERN thread=X waited=3500 ms]
+[VULNERABILITY] Detected: 3/10, Missed (breaches): 7
+[VULNERABILITY] Max security delay: 2100ms (starvation caused security failures)
+
+== CriticalServiceStarvationDemo: SECURE (fair scheduling) ==
+[DETECTED] Security event intrusion-secure-0 processed securely (delay: 120ms)
+[DETECTED] Security event intrusion-secure-1 processed securely (delay: 180ms)
+[DETECTED] Security event intrusion-secure-2 processed securely (delay: 95ms)
+...
+[SECURE] Detected: 10/10, Missed: 0
+[SECURE] Max security delay: 250ms (fair scheduling prevented starvation)
+
+== CriticalServiceStarvationDemo: Authentication service starved ==
+[ATTACK] Failed login attempt #1
+[ATTACK] Failed login attempt #2
+[ATTACK] Failed login attempt #3
+...
+[CRITICAL] Authentication service delayed by 1450ms - attacker may have gained access!
+[Monitor detecta STARVATION_PATTERN]
+[ATTACK] Failed login attempt #15
+[AUTH] Blocking suspicious activity (failed logins: 15)
+[SECURITY BREACH] System compromised due to authentication service starvation!
+Total failed login attempts: 20
+
+
+### 3.2 ESTATÍSTICAS DO MONITOR EBPF ###
+=== Monitor statistics ===
+Accesses per thread: {11=250, 12=250, 13=150, 14=120, ...}
+Acquisition order: {11=[shared1_lock, A, B], 12=[A, B], ...}
+
+==========================================================
+Simulação concluída! Logs escritos em: logs/monitor.log
+==========================================================
+
+
+=== CONTEÚDO DO FICHEIRO logs/monitor.log ===
+
+[2025-12-16T14:30:15.123] Monitor started at 2025-12-16T14:30:15.123
+[2025-12-16T14:30:15.245] ACCESS resource=shared1 thread=unsync-0 inCritical=false
+[2025-12-16T14:30:15.246] ACCESS resource=shared1 thread=unsync-1 inCritical=false
+[2025-12-16T14:30:15.247] RACE_DETECTED on resource=shared1 between threads 11 and 12 (delta=1 ms)
+[2025-12-16T14:30:16.123] LOCK_REQUESTED lock=A thread=t-dead-1
+[2025-12-16T14:30:16.124] LOCK_ACQUIRED lock=A thread=t-dead-1
+[2025-12-16T14:30:16.125] LOCK_REQUESTED lock=B thread=t-dead-2
+[2025-12-16T14:30:16.126] LOCK_ACQUIRED lock=B thread=t-dead-2
+[2025-12-16T14:30:16.180] LOCK_REQUESTED lock=B thread=t-dead-1
+[2025-12-16T14:30:16.181] LOCK_REQUESTED lock=A thread=t-dead-2
+[2025-12-16T14:30:16.185] POTENTIAL_DEADLOCK involving threads 15 and 16 locks A and B
+[2025-12-16T14:30:18.200] DEADLOCK_DETECTED among threads in wait-for graph: {15=16, 16=15}
+[2025-12-16T14:30:20.456] LOCK_REQUESTED lock=BUSY thread=low-priority
+[2025-12-16T14:30:23.500] STARVATION_PATTERN thread=18 waited=3044 ms
+[2025-12-16T14:30:23.501] LOCK_ACQUIRED lock=BUSY thread=low-priority
+[2025-12-16T14:30:25.789] ACCESS resource=privilege_check thread=attacker inCritical=false
+[2025-12-16T14:30:25.790] ACCESS resource=privilege_check thread=admin-reset inCritical=false
+[2025-12-16T14:30:25.791] RACE_DETECTED on resource=privilege_check between threads 20 and 21 (delta=1 ms)
+[2025-12-16T14:30:28.123] LOCK_REQUESTED lock=database thread=attacker-1
+[2025-12-16T14:30:28.124] LOCK_ACQUIRED lock=database thread=attacker-1
+[2025-12-16T14:30:28.150] LOCK_REQUESTED lock=network thread=attacker-2
+[2025-12-16T14:30:28.151] LOCK_ACQUIRED lock=network thread=attacker-2
+[2025-12-16T14:30:28.250] LOCK_REQUESTED lock=network thread=attacker-1
+[2025-12-16T14:30:28.251] LOCK_REQUESTED lock=database thread=attacker-2
+[2025-12-16T14:30:30.300] POTENTIAL_DEADLOCK involving threads 25 and 26 locks database and network
+[2025-12-16T14:30:30.301] DEADLOCK_DETECTED among threads in wait-for graph: {25=26, 26=25}
+[2025-12-16T14:30:32.456] LOCK_REQUESTED lock=system_monitor thread=security-monitor
+[2025-12-16T14:30:35.500] STARVATION_PATTERN thread=30 waited=3044 ms
+[2025-12-16T14:30:35.501] LOCK_ACQUIRED lock=system_monitor thread=security-monitor
+...
+[2025-12-16T14:30:45.999] Monitor shutting down at 2025-12-16T14:30:45.999

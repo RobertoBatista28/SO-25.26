@@ -15,9 +15,7 @@ public class DenialOfServiceDemo {
     // Critical system resources
     private final ReentrantLock databaseLock = new ReentrantLock();
     private final ReentrantLock networkLock = new ReentrantLock();
-    private final ReentrantLock fileLock = new ReentrantLock();
     
-    private volatile boolean serviceAvailable = true;
     private volatile int successfulRequests = 0;
     private volatile int failedRequests = 0;
     
@@ -30,7 +28,6 @@ public class DenialOfServiceDemo {
      */
     public void runDoSAttack() throws InterruptedException {
         System.out.println("== DenialOfServiceDemo: DoS via deliberate deadlock ==");
-        serviceAvailable = true;
         successfulRequests = 0;
         failedRequests = 0;
         
@@ -127,7 +124,6 @@ public class DenialOfServiceDemo {
      */
     public void runMitigatedScenario() throws InterruptedException {
         System.out.println("== DenialOfServiceDemo: MITIGATED (timeout-based locks) ==");
-        serviceAvailable = true;
         successfulRequests = 0;
         failedRequests = 0;
         

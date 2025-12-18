@@ -17,6 +17,7 @@ public class EquipamentoMedico {
         try {
             // Registar que a thread está à espera do recurso
             MonitorEBPF.getInstance().getDetector().registarEspera(Thread.currentThread(), lock);
+            MonitorEBPF.getInstance().registarInicioEspera(Thread.currentThread(), "Equipamento:" + nome);
             
             lock.lockInterruptibly();
             

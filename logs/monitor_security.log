@@ -53,3 +53,18 @@ Transacao_B aguarda por: Transacao_A
 
 [2025/12/18 18:14:25] [ALERT] STARVATION: Transacao_A espera ha 4044ms.
 [2025/12/18 18:14:25] [ALERT] STARVATION: Transacao_B espera ha 4044ms.
+[2025/12/18 18:38:08] [INFO] Monitor Iniciado.
+[2025/12/18 18:38:08] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/18 18:38:19] [EVENTO] Acesso garantido: main -> StockSangue(Escrita) (Total: 1)
+[2025/12/18 18:38:21] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/18 18:38:21]   main: 1 acessos
+[2025/12/18 18:38:21] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/18 18:38:21] (Nenhum tempo registado)
+[2025/12/18 18:38:21] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/18 18:38:21]   [1766083099910] main obteve StockSangue(Escrita)
+[2025/12/18 18:38:21] ==============================
+
+[2025/12/18 18:38:21] [INFO] Monitor Parado.

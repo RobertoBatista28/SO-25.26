@@ -16,6 +16,10 @@ public class MonitorEBPF extends Thread {
     private final Map<Thread, Long> tempoEspera = new ConcurrentHashMap<>();
     private final Map<String, Integer> estatisticasAcessos = new ConcurrentHashMap<>();
     private final List<String> ordemObtencaoRecursos = Collections.synchronizedList(new ArrayList<>());
+    private final Map<String, List<Long>> temposEsperaIndividuais = new ConcurrentHashMap<>(); // Thread → Lista de tempos
+    private final Map<Thread, Long> inicioEsperaAtual = new ConcurrentHashMap<>(); // Thread → Timestamp início
+    private final Map<String, Thread> recursoEmUso = new ConcurrentHashMap<>(); // Recurso → Thread atual (para detetar race conditions)
+    private final Map<String, Long> ultimoAcessoRecurso = new ConcurrentHashMap<>(); // Recurso → Timestamp
 
     private MonitorEBPF() {
         this.logger = new LoggerMonitor(Config.LOG_FILE);
@@ -56,9 +60,47 @@ public class MonitorEBPF extends Thread {
         String evento = String.format("[%d] %s obteve %s", System.currentTimeMillis(), t.getName(), recurso);
         ordemObtencaoRecursos.add(evento);
         
+        // 3. Calcular tempo de espera se estava a aguardar
+        Long inicio = inicioEsperaAtual.remove(t);
+        if (inicio != null) {
+            long tempoEspera = System.currentTimeMillis() - inicio;
+            temposEsperaIndividuais.computeIfAbsent(t.getName(), k -> Collections.synchronizedList(new ArrayList<>()))
+                                    .add(tempoEspera);
+            logger.log("[TIMING] " + t.getName() + " aguardou " + tempoEspera + "ms por " + recurso);
+        }
+        
         // Logar o evento
         logger.log("[EVENTO] Acesso garantido: " + t.getName() + " -> " + recurso + 
                    " (Total: " + estatisticasAcessos.get(t.getName()) + ")");
+    }
+    
+    /**
+     * Regista o início de espera por um recurso (chamado ANTES de tentar lock).
+     */
+    public void registarInicioEspera(Thread t, String recurso) {
+        inicioEsperaAtual.put(t, System.currentTimeMillis());
+    }
+    
+    /**
+     * Regista acesso a recurso partilhado SEM sincronização (para deteção de race conditions).
+     * Alerta se múltiplas threads acedem ao mesmo recurso num intervalo curto.
+     */
+    public void registarAcessoNaoSincronizado(Thread t, String recurso) {
+        long agora = System.currentTimeMillis();
+        Thread threadAnterior = recursoEmUso.get(recurso);
+        Long tempoAnterior = ultimoAcessoRecurso.get(recurso);
+        
+        // Se outra thread acedeu recentemente (< 50ms) = POSSÍVEL RACE CONDITION
+        if (threadAnterior != null && threadAnterior != t && 
+            tempoAnterior != null && (agora - tempoAnterior) < 50) {
+            String alerta = String.format("[ALERT] POSSÍVEL RACE CONDITION: %s e %s acederam '%s' em %dms",
+                                         threadAnterior.getName(), t.getName(), recurso, (agora - tempoAnterior));
+            logger.log(alerta);
+            System.err.println("\n⚠️ " + alerta);
+        }
+        
+        recursoEmUso.put(recurso, t);
+        ultimoAcessoRecurso.put(recurso, agora);
     }
 
     @Override
@@ -118,6 +160,20 @@ public class MonitorEBPF extends Thread {
     }
     
     /**
+     * Obtém estatísticas de tempos de espera por thread.
+     * Retorna mapa: Nome da Thread → Lista de tempos de espera (ms)
+     */
+    public Map<String, List<Long>> obterTemposEspera() {
+        Map<String, List<Long>> copia = new ConcurrentHashMap<>();
+        temposEsperaIndividuais.forEach((thread, tempos) -> {
+            synchronized (tempos) {
+                copia.put(thread, new ArrayList<>(tempos));
+            }
+        });
+        return copia;
+    }
+    
+    /**
      * Imprime relatório de estatísticas no log.
      */
     public void imprimirEstatisticas() {
@@ -128,6 +184,24 @@ public class MonitorEBPF extends Thread {
             estatisticasAcessos.forEach((thread, count) -> 
                 logger.log(String.format("  %s: %d acessos", thread, count))
             );
+        }
+        
+        logger.log("\n=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===");
+        if (temposEsperaIndividuais.isEmpty()) {
+            logger.log("(Nenhum tempo registado)");
+        } else {
+            temposEsperaIndividuais.forEach((thread, tempos) -> {
+                synchronized (tempos) {
+                    if (!tempos.isEmpty()) {
+                        long soma = tempos.stream().mapToLong(Long::longValue).sum();
+                        long media = soma / tempos.size();
+                        long max = tempos.stream().mapToLong(Long::longValue).max().orElse(0);
+                        long min = tempos.stream().mapToLong(Long::longValue).min().orElse(0);
+                        logger.log(String.format("  %s: %d acessos | Média: %dms | Min: %dms | Max: %dms", 
+                                                  thread, tempos.size(), media, min, max));
+                    }
+                }
+            });
         }
         
         logger.log("\n=== ORDEM DE OBTENÇÃO DE RECURSOS ===");

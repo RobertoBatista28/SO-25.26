@@ -30,6 +30,9 @@ public class StockSangue {
 
     // FALHA (Unsafe): Simula latência para causar Race Condition
     public void retirarInseguro(int qtd) {
+        // Registar acesso não sincronizado (para deteção)
+        MonitorEBPF.getInstance().registarAcessoNaoSincronizado(Thread.currentThread(), "StockSangue:retirarInseguro");
+        
         // Secção Crítica Vulnerável
         if (unidades >= qtd) {
             try { Thread.sleep(100); } catch (InterruptedException e) {}

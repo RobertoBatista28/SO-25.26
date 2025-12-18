@@ -13,6 +13,7 @@ public class BaseDados {
         try {
             // solicitar recurso
             MonitorEBPF.getInstance().getDetector().registarEspera(Thread.currentThread(), lock);
+            MonitorEBPF.getInstance().registarInicioEspera(Thread.currentThread(), "DB:" + nomeTabela);
             
             lock.lockInterruptibly(); // Tenta adquirir o recurso
             

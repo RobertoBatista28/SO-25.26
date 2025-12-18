@@ -38,8 +38,11 @@ public class Main {
                 case "2": menuProblemas(); break;
                 case "3": gestaoStockInterativa(); break;
                 case "0":
+                    System.out.println("\n=== RELATÓRIO FINAL ===");
+                    monitor.imprimirEstatisticas();
                     monitor.shutdown();
                     System.out.println("A encerrar sistema...");
+                    try { Thread.sleep(500); } catch (InterruptedException e) {}
                     System.exit(0);
                 default: System.out.println("Opção inválida.");
             }

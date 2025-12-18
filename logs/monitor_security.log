@@ -15,3 +15,41 @@
 [2025/12/18 17:07:16] [INFO] Monitor Iniciado.
 [2025/12/18 17:07:41] [INFO] Monitor Iniciado.
 [2025/12/18 17:07:50] [INFO] Monitor Iniciado.
+[2025/12/18 18:12:49] [INFO] Monitor Iniciado.
+[2025/12/18 18:12:49] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/18 18:14:20] [EVENTO] Acesso garantido: Transacao_A -> DB:Pacientes (Total: 1)
+[2025/12/18 18:14:20] [EVENTO] Acesso garantido: Transacao_B -> DB:Historico (Total: 1)
+[2025/12/18 18:14:21] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/18 18:14:21] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/18 18:14:22] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/18 18:14:22] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/18 18:14:23] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/18 18:14:23] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/18 18:14:24] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/18 18:14:24] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/18 18:14:24] [ALERT] STARVATION: Transacao_A espera ha 3030ms.
+[2025/12/18 18:14:24] [ALERT] STARVATION: Transacao_B espera ha 3030ms.
+[2025/12/18 18:14:25] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/18 18:14:25] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/18 18:14:25] [ALERT] STARVATION: Transacao_A espera ha 4044ms.
+[2025/12/18 18:14:25] [ALERT] STARVATION: Transacao_B espera ha 4044ms.

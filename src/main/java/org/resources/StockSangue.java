@@ -1,17 +1,25 @@
 package org.resources;
 
+import org.monitor.MonitorEBPF;
+
 public class StockSangue {
     private int unidades;
 
     public StockSangue(int inicio) { this.unidades = inicio; }
 
     public synchronized void adicionar(int qtd) {
+        // Hook de monitorização
+        MonitorEBPF.getInstance().registarAcesso(Thread.currentThread(), "StockSangue(Escrita)");
+
         this.unidades += qtd;
         System.out.println("[STOCK] Adicionado " + qtd + ". Total: " + unidades);
     }
 
     // CORREÇÃO (Safe): Usa synchronized para atomicidade
     public synchronized boolean retirarSeguroManual(int qtd) {
+        // Hook de monitorização - Regista que a thread conseguiu entrar na secção crítica
+        MonitorEBPF.getInstance().registarAcesso(Thread.currentThread(), "StockSangue(Leitura/Escrita)");
+        
         if (unidades >= qtd) {
             unidades -= qtd;
             System.out.println("[STOCK] Retirado " + qtd + ". Restante: " + unidades);

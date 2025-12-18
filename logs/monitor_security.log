@@ -1,0 +1,17 @@
+[2025/12/09 15:41:52] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
+[2025/12/09 15:47:09] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
+[2025/12/09 15:49:15] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_1 está em espera há 3042ms. Prioridade comprometida.
+[2025/12/09 15:49:15] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_2 está em espera há 3047ms. Prioridade comprometida.
+[2025/12/09 15:49:16] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_1 está em espera há 4060ms. Prioridade comprometida.
+[2025/12/09 15:49:16] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_2 está em espera há 4061ms. Prioridade comprometida.
+[2025/12/09 17:24:20] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
+[2025/12/09 17:24:28] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_1 está em espera há 3036ms. Prioridade comprometida.
+[2025/12/09 17:24:28] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_2 está em espera há 3037ms. Prioridade comprometida.
+[2025/12/09 17:24:29] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_1 está em espera há 4048ms. Prioridade comprometida.
+[2025/12/09 17:24:29] [SECURITY ALERT] STARVATION: A thread Processo_Atacante_2 está em espera há 4049ms. Prioridade comprometida.
+[2025/12/09 17:34:36] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
+[2025/12/10 10:47:26] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
+[2025/12/16 13:48:11] [INFO] Sistema de Monitoriza��o Iniciado (eBPF Style).
+[2025/12/18 17:07:16] [INFO] Monitor Iniciado.
+[2025/12/18 17:07:41] [INFO] Monitor Iniciado.
+[2025/12/18 17:07:50] [INFO] Monitor Iniciado.

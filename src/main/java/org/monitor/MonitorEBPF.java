@@ -32,7 +32,9 @@ public class MonitorEBPF extends Thread {
         return instance;
     }
 
-    public synchronized void track(Thread t) { threadsVigiadas.add(t); }
+    public synchronized void track(Thread t) { 
+        threadsVigiadas.add(t); 
+    }
     public synchronized void untrack(Thread t) { 
         threadsVigiadas.remove(t); 
         tempoEspera.remove(t); 
@@ -46,7 +48,9 @@ public class MonitorEBPF extends Thread {
         return detector; 
     }
 
-    public void shutdown() { running = false; this.interrupt(); }
+    public void shutdown() { 
+        running = false; this.interrupt(); 
+    }
 
     /**
      * Hook estilo eBPF: Chamado pelos recursos quando uma thread ganha exclusividade.
@@ -106,7 +110,6 @@ public class MonitorEBPF extends Thread {
     @Override
     public void run() {
         logger.log("[INFO] Monitor Iniciado.");
-        logger.log("[INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos");
         
         while (running) {
             try {
@@ -136,7 +139,10 @@ public class MonitorEBPF extends Thread {
                     }
                 }
                 Thread.sleep(Config.MONITOR_INTERVAL_MS);
-            } catch (InterruptedException e) { if(!running) break; }
+            } catch (InterruptedException e) {
+                if(!running)
+                    break; 
+                }
         }
         logger.log("[INFO] Monitor Parado.");
     }

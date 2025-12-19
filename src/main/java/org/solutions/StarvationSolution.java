@@ -1,4 +1,5 @@
 package org.solutions;
+import org.app.Config;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class StarvationSolution {
@@ -10,19 +11,33 @@ public class StarvationSolution {
         Thread vitima = new Thread(() -> {
             System.out.println("Vítima na fila...");
             fairLock.lock();
-            try { System.out.println(">>> Vítima atendida!"); } finally { fairLock.unlock(); }
+            try {
+                System.out.println(">>> Vítima atendida!");
+            } finally {
+                fairLock.unlock();
+            }
         });
         vitima.setPriority(Thread.MIN_PRIORITY);
 
         // Encher fila
-        for(int i=0; i<100; i++) {
+        for (int i = 0; i < 100; i++) {
             new Thread(() -> {
                 fairLock.lock();
-                try{Thread.sleep(5);}catch(Exception e){}finally{fairLock.unlock();}
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } finally {
+                    fairLock.unlock();
+                }
             }).start();
         }
 
         vitima.start();
-        try { vitima.join(3000); } catch(Exception e){}
+        try {
+            vitima.join(Config.STARVATION_THRESHOLD_MS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

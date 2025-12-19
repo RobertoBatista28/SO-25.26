@@ -5,7 +5,9 @@ import org.monitor.MonitorEBPF;
 public class StockSangue {
     private int unidades;
 
-    public StockSangue(int inicio) { this.unidades = inicio; }
+    public StockSangue(int inicio) {
+        this.unidades = inicio;
+    }
 
     public synchronized void adicionar(int qtd) {
         // Hook de monitorização
@@ -15,11 +17,11 @@ public class StockSangue {
         System.out.println("[STOCK] Adicionado " + qtd + ". Total: " + unidades);
     }
 
-    // CORREÇÃO (Safe): Usa synchronized para atomicidade
+    // CORREÇÃO (Seguro): Usa synchronized para atomicidade
     public synchronized boolean retirarSeguroManual(int qtd) {
         // Hook de monitorização - Regista que a thread conseguiu entrar na secção crítica
         MonitorEBPF.getInstance().registarAcesso(Thread.currentThread(), "StockSangue(Leitura/Escrita)");
-        
+
         if (unidades >= qtd) {
             unidades -= qtd;
             System.out.println("[STOCK] Retirado " + qtd + ". Restante: " + unidades);
@@ -28,18 +30,25 @@ public class StockSangue {
         return false;
     }
 
-    // FALHA (Unsafe): Simula latência para causar Race Condition
+    // FALHA (Inseguro): Simula latência para causar Race Condition
     public void retirarInseguro(int qtd) {
         // Registar acesso não sincronizado (para deteção)
         MonitorEBPF.getInstance().registarAcessoNaoSincronizado(Thread.currentThread(), "StockSangue:retirarInseguro");
-        
+
         // Secção Crítica Vulnerável
         if (unidades >= qtd) {
-            try { Thread.sleep(100); } catch (InterruptedException e) {}
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("[Aviso] Latência interrompida em retirarInseguro");
+            }
             unidades -= qtd;
             System.out.println("-> " + Thread.currentThread().getName() + " retirou " + qtd + ". Stock: " + unidades);
         }
     }
 
-    public int getUnidades() { return unidades; }
+    public int getUnidades() {
+        return unidades;
+    }
 }

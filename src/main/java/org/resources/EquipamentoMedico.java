@@ -45,5 +45,7 @@ public class EquipamentoMedico {
         }
     }
 
-    public String getNome() { return nome; }
+    public String getNome() { 
+        return nome; 
+    }
 }

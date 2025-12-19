@@ -219,3 +219,90 @@ Transacao_B aguarda por: Transacao_A
 [2025/12/19 03:45:19] ==============================
 
 [2025/12/19 03:45:19] [INFO] Monitor Parado.
+[2025/12/19 15:13:35] [INFO] Monitor Iniciado.
+[2025/12/19 15:13:35] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 15:14:42] [EVENTO] Acesso garantido: Medico_1 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 15:14:42] [EVENTO] Acesso garantido: Medico_2 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 15:15:24] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 15:15:24]   Medico_1: 1 acessos
+[2025/12/19 15:15:24]   Medico_2: 1 acessos
+[2025/12/19 15:15:24] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 15:15:24] (Nenhum tempo registado)
+[2025/12/19 15:15:24] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 15:15:24]   [1766157282961] Medico_1 obteve StockSangue(Leitura/Escrita)
+[2025/12/19 15:15:24]   [1766157282962] Medico_2 obteve StockSangue(Leitura/Escrita)
+[2025/12/19 15:15:24] ==============================
+
+[2025/12/19 15:15:24] [INFO] Monitor Parado.
+[2025/12/19 15:16:44] [INFO] Monitor Iniciado.
+[2025/12/19 15:16:44] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 15:17:30] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 15:17:30] (Nenhum acesso registado)
+[2025/12/19 15:17:30] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 15:17:30] (Nenhum tempo registado)
+[2025/12/19 15:17:30] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 15:17:30] (Nenhuma obtenção registada)
+[2025/12/19 15:17:30] ==============================
+
+[2025/12/19 15:17:30] [INFO] Monitor Parado.
+[2025/12/19 17:06:39] [INFO] Monitor Iniciado.
+[2025/12/19 17:07:49] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 17:07:49] (Nenhum acesso registado)
+[2025/12/19 17:07:49] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 17:07:49] (Nenhum tempo registado)
+[2025/12/19 17:07:49] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 17:07:49] (Nenhuma obtenção registada)
+[2025/12/19 17:07:49] ==============================
+
+[2025/12/19 17:07:49] [INFO] Monitor Parado.
+[2025/12/19 17:09:32] [INFO] Monitor Iniciado.
+[2025/12/19 17:11:12] [INFO] Monitor Iniciado.
+[2025/12/19 17:31:38] [INFO] Monitor Iniciado.
+[2025/12/19 17:32:12] [INFO] Monitor Iniciado.
+[2025/12/19 17:32:25] [TIMING] Transacao_B aguardou 1ms por DB:Historico
+[2025/12/19 17:32:25] [TIMING] Transacao_A aguardou 1ms por DB:Pacientes
+[2025/12/19 17:32:25] [EVENTO] Acesso garantido: Transacao_B -> DB:Historico (Total: 1)
+[2025/12/19 17:32:25] [EVENTO] Acesso garantido: Transacao_A -> DB:Pacientes (Total: 1)
+[2025/12/19 17:32:25] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 17:32:25] 
+=== Wait-for Graph ===
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 17:32:26] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 17:32:26] 
+=== Wait-for Graph ===
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 17:32:27] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 17:32:27] 
+=== Wait-for Graph ===
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 17:32:28] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 17:32:28] 
+=== Wait-for Graph ===
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 17:32:28] [ALERT] STARVATION: Transacao_A espera ha 3033ms.
+[2025/12/19 17:32:28] [ALERT] STARVATION: Transacao_B espera ha 3034ms.
+[2025/12/19 17:32:29] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 17:32:29] 
+=== Wait-for Graph ===
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 17:32:29] [ALERT] STARVATION: Transacao_A espera ha 4046ms.
+[2025/12/19 17:32:29] [ALERT] STARVATION: Transacao_B espera ha 4046ms.

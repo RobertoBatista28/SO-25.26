@@ -1,4 +1,5 @@
 package org.monitor;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,15 +14,18 @@ public class LoggerMonitor {
     public LoggerMonitor(String filepath) {
         this.filepath = filepath;
         File f = new File(filepath);
-        if (f.getParentFile() != null) f.getParentFile().mkdirs();
+        if (f.getParentFile() != null)
+            f.getParentFile().mkdirs();
     }
 
     public synchronized void log(String message) {
         String entry = String.format("[%s] %s", dtf.format(LocalDateTime.now()), message);
-        System.out.println(entry);
+        // System.out.println(entry);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true))) {
             writer.write(entry);
             writer.newLine();
-        } catch (IOException e) { System.err.println("Erro Log: " + e.getMessage()); }
+        } catch (IOException e) {
+            System.err.println("Erro Log: " + e.getMessage());
+        }
     }
 }

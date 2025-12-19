@@ -1,4 +1,5 @@
 package org.scenarios;
+
 import java.util.Scanner;
 
 import org.monitor.MonitorEBPF;
@@ -13,28 +14,48 @@ public class DeadlockScenario {
 
         Thread t1 = new Thread(() -> {
             pac.bloqueioLeitura();
-            try{Thread.sleep(100);}catch(Exception e){}
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Transacao_A interrompida.");
+            }
             hist.bloqueioLeitura(); // Bloqueia
-            hist.desbloquear(); pac.desbloquear();
+            hist.desbloquear();
+            pac.desbloquear();
         }, "Transacao_A");
 
         Thread t2 = new Thread(() -> {
             hist.bloqueioLeitura();
-            try{Thread.sleep(100);}catch(Exception e){}
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Transacao_B interrompida.");
+            }
             pac.bloqueioLeitura(); // Bloqueia
-            pac.desbloquear(); hist.desbloquear();
+            pac.desbloquear();
+            hist.desbloquear();
         }, "Transacao_B");
 
-        monitor.track(t1); monitor.track(t2);
+        monitor.track(t1);
+        monitor.track(t2);
         System.out.println("Pressione ENTER para lançar deadlock...");
         scanner.nextLine();
-        t1.start(); t2.start();
+        t1.start();
+        t2.start();
 
-        try { Thread.sleep(5000); } catch(Exception e){} // Espera monitor detetar
-        if(t1.isAlive()) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } // Espera monitor detetar
+        if (t1.isAlive()) {
             System.out.println("Sistema encravado! A matar processos...");
-            t1.interrupt(); t2.interrupt();
+            t1.interrupt();
+            t2.interrupt();
         }
-        monitor.untrack(t1); monitor.untrack(t2);
+        monitor.untrack(t1);
+        monitor.untrack(t2);
     }
 }

@@ -34,17 +34,27 @@ public class Main {
             String op = scanner.nextLine();
 
             switch (op) {
-                case "1": menuSolucoes(); break;
-                case "2": menuProblemas(); break;
-                case "3": gestaoStockInterativa(); break;
+                case "1":
+                    menuSolucoes();
+                    break;
+                case "2":
+                    menuProblemas();
+                    break;
+                case "3":
+                    gestaoStockInterativa();
+                    break;
                 case "0":
                     System.out.println("\n=== RELATÓRIO FINAL ===");
                     monitor.imprimirEstatisticas();
                     monitor.shutdown();
                     System.out.println("A encerrar sistema...");
-                    try { Thread.sleep(500); } catch (InterruptedException e) {}
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                    }
                     System.exit(0);
-                default: System.out.println("Opção inválida.");
+                default:
+                    System.out.println("Opção inválida.");
             }
         }
     }
@@ -60,11 +70,20 @@ public class Main {
         String op = scanner.nextLine();
 
         switch (op) {
-            case "1": RaceConditionSolution.run(scanner); break;
-            case "2": DeadlockSolution.run(); break;
-            case "3": StarvationSolution.run(); break;
-            case "4": ExecutionOrderSolution.run(); break;
-            case "0": break;
+            case "1":
+                RaceConditionSolution.run(scanner);
+                break;
+            case "2":
+                DeadlockSolution.run();
+                break;
+            case "3":
+                StarvationSolution.run();
+                break;
+            case "4":
+                ExecutionOrderSolution.run();
+                break;
+            case "0":
+                break;
         }
     }
 
@@ -80,13 +99,24 @@ public class Main {
 
         try {
             switch (op) {
-                case "1": RaceConditionScenario.run(scanner); break;
-                case "2": DeadlockScenario.run(scanner); break;
-                case "3": StarvationScenario.run(); break;
-                case "4": ExecutionOrderScenario.run(); break;
-                case "0": break;
+                case "1":
+                    RaceConditionScenario.run(scanner);
+                    break;
+                case "2":
+                    DeadlockScenario.run(scanner);
+                    break;
+                case "3":
+                    StarvationScenario.run();
+                    break;
+                case "4":
+                    ExecutionOrderScenario.run();
+                    break;
+                case "0":
+                    break;
             }
-        } catch (Exception e) { e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void gestaoStockInterativa() {
@@ -95,14 +125,15 @@ public class Main {
         System.out.println("1. Adicionar | 2. Retirar | 0. Voltar");
         String acao = scanner.nextLine();
         try {
-            if(acao.equals("1")) {
+            if (acao.equals("1")) {
                 System.out.print("Qtd: ");
                 stockGlobal.adicionar(Integer.parseInt(scanner.nextLine()));
-            } else if(acao.equals("2")) {
+            } else if (acao.equals("2")) {
                 System.out.print("Qtd: ");
-                if(!stockGlobal.retirarSeguroManual(Integer.parseInt(scanner.nextLine())))
+                if (!stockGlobal.retirarSeguroManual(Integer.parseInt(scanner.nextLine())))
                     System.out.println("Erro: Stock insuficiente.");
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 }

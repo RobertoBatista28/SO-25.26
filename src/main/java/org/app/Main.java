@@ -55,7 +55,6 @@ public class Main {
                     break;
                 case "0":
                     System.out.println("\n=== RELATÓRIO FINAL ===");
-                    monitor.logEstatisticasFinais();
                     monitor.shutdown();
                     System.out.println("A encerrar sistema...");
                     try {

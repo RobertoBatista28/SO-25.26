@@ -18,7 +18,7 @@ public class MonitorEBPF extends Thread {
     // Estatísticas
     private final Map<Thread, Long> tempoInicioEspera = new ConcurrentHashMap<>();
     private final Map<String, Integer> contagemAcessos = new ConcurrentHashMap<>();
-    private final List<String> ordemExclusividade = Collections.synchronizedList(new ArrayList<>());
+    private final List<String> ordemEventos = Collections.synchronizedList(new ArrayList<>());
 
     // Deteção de Race Condition (Contador de threads em zona crítica insegura)
     private final Map<String, Integer> threadsEmZonaInsegura = new ConcurrentHashMap<>();
@@ -27,7 +27,9 @@ public class MonitorEBPF extends Thread {
         this.logger = new LoggerMonitor(Config.LOG_FILE);
         this.detector = new DetectorDeadlock();
         this.setName("Monitor-Security-Kernel");
-    }
+    } 
+
+
 
     public static synchronized MonitorEBPF getInstance() {
         if (instance == null)
@@ -66,7 +68,7 @@ public class MonitorEBPF extends Thread {
     public void registarAcesso(Thread t, String recurso) {
         contagemAcessos.merge(t.getName(), 1, Integer::sum);
         String evento = String.format("[%d] %s obteve %s", System.currentTimeMillis(), t.getName(), recurso);
-        ordemExclusividade.add(evento);
+        ordemEventos.add(evento);
         logger.log("[ACESSO] " + t.getName() + " -> " + recurso);
     }
 
@@ -146,11 +148,11 @@ public class MonitorEBPF extends Thread {
     public void logEstatisticasFinais() {
         logger.log("\n=== ESTATÍSTICAS FINAIS ===");
         contagemAcessos.forEach((k, v) -> logger.log("Thread " + k + ": " + v + " acessos"));
-        logger.log("--- Ordem de Exclusividade (Amostra) ---");
-        synchronized (ordemExclusividade) {
-            int max = Math.min(10, ordemExclusividade.size());
+        logger.log("--- Ordem de Eventos (Amostra) ---");
+        synchronized (ordemEventos) {
+            int max = Math.min(10, ordemEventos.size());
             for (int i = 0; i < max; i++)
-                logger.log(ordemExclusividade.get(i));
+                logger.log(ordemEventos.get(i));
         }
     }
 }

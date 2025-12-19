@@ -13,3 +13,146 @@
 [2025/12/19 22:28:34] --- Ordem de Exclusividade (Amostra) ---
 [2025/12/19 22:50:39] [INFO] Monitor eBPF Iniciado.
 [2025/12/19 22:50:42] [ALERTA CIBERSEGURANÇA] RACE CONDITION detetada em 'StockSangue:retirarInseguro'. Threads concorrentes: 2
+[2025/12/19 23:27:20] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 23:27:26] [ACESSO] Transacao_B -> DB:Historico
+[2025/12/19 23:27:26] [ACESSO] Transacao_A -> DB:Pacientes
+[2025/12/19 23:27:26] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:27:26] --- Wait-for Graph Dump ---
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 23:27:27] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:27:27] --- Wait-for Graph Dump ---
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 23:27:28] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:27:28] --- Wait-for Graph Dump ---
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 23:27:29] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:27:29] --- Wait-for Graph Dump ---
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 23:27:29] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_A em espera ha 3880ms (Estado: WAITING)
+[2025/12/19 23:27:29] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_B em espera ha 3880ms (Estado: WAITING)
+[2025/12/19 23:27:30] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:27:30] --- Wait-for Graph Dump ---
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 23:27:30] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_A em espera ha 4892ms (Estado: WAITING)
+[2025/12/19 23:27:30] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_B em espera ha 4892ms (Estado: WAITING)
+[2025/12/19 23:32:23] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 23:32:23] Thread Transacao_B: 1 acessos
+[2025/12/19 23:32:23] Thread Transacao_A: 1 acessos
+[2025/12/19 23:32:23] --- Ordem de Exclusividade (Amostra) ---
+[2025/12/19 23:32:23] [1766186846056] Transacao_A obteve DB:Pacientes
+[2025/12/19 23:32:23] [1766186846056] Transacao_B obteve DB:Historico
+[2025/12/19 23:32:23] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 23:32:23] Thread Transacao_B: 1 acessos
+[2025/12/19 23:32:23] Thread Transacao_A: 1 acessos
+[2025/12/19 23:32:23] --- Ordem de Exclusividade (Amostra) ---
+[2025/12/19 23:32:23] [1766186846056] Transacao_A obteve DB:Pacientes
+[2025/12/19 23:32:23] [1766186846056] Transacao_B obteve DB:Historico
+[2025/12/19 23:34:07] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 23:34:10] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 23:34:10] --- Ordem de Exclusividade (Amostra) ---
+[2025/12/19 23:34:23] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 23:34:28] [ACESSO] Transacao_B -> DB:Historico
+[2025/12/19 23:34:28] [ACESSO] Transacao_A -> DB:Pacientes
+[2025/12/19 23:34:29] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:34:29] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:34:30] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:34:30] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:34:31] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:34:31] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:34:32] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:34:32] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:34:32] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_A em espera ha 3784ms (Estado: WAITING)
+[2025/12/19 23:34:32] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_B em espera ha 3784ms (Estado: WAITING)
+[2025/12/19 23:34:33] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 30 31 
+[2025/12/19 23:34:33] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:34:33] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_A em espera ha 4796ms (Estado: WAITING)
+[2025/12/19 23:34:33] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_B em espera ha 4796ms (Estado: WAITING)
+[2025/12/19 23:34:40] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Vitima_Baixa_Prio em espera ha 3041ms (Estado: WAITING)
+[2025/12/19 23:34:41] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Vitima_Baixa_Prio em espera ha 4056ms (Estado: WAITING)
+[2025/12/19 23:34:42] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Vitima_Baixa_Prio em espera ha 5071ms (Estado: WAITING)
+[2025/12/19 23:34:43] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Vitima_Baixa_Prio em espera ha 6081ms (Estado: WAITING)
+[2025/12/19 23:34:44] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Vitima_Baixa_Prio em espera ha 7083ms (Estado: WAITING)
+[2025/12/19 23:34:45] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Vitima_Baixa_Prio em espera ha 8096ms (Estado: WAITING)
+[2025/12/19 23:34:46] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Vitima_Baixa_Prio em espera ha 9106ms (Estado: WAITING)
+[2025/12/19 23:34:46] [ACESSO] Vitima_Baixa_Prio -> Recurso_Critico
+[2025/12/19 23:34:48] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 23:34:48] Thread Transacao_B: 1 acessos
+[2025/12/19 23:34:48] Thread Transacao_A: 1 acessos
+[2025/12/19 23:34:48] Thread Vitima_Baixa_Prio: 1 acessos
+[2025/12/19 23:34:48] --- Ordem de Exclusividade (Amostra) ---
+[2025/12/19 23:34:48] [1766187268379] Transacao_A obteve DB:Pacientes
+[2025/12/19 23:34:48] [1766187268379] Transacao_B obteve DB:Historico
+[2025/12/19 23:34:48] [1766187286942] Vitima_Baixa_Prio obteve Recurso_Critico
+[2025/12/19 23:36:19] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 23:36:21] [ALERTA CIBERSEGURANÇA] RACE CONDITION detetada em 'StockSangue:retirarInseguro'. Threads concorrentes: 2
+[2025/12/19 23:36:26] [ACESSO] Transacao_B -> DB:Historico
+[2025/12/19 23:36:26] [ACESSO] Transacao_A -> DB:Pacientes
+[2025/12/19 23:36:27] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 33 32 
+[2025/12/19 23:36:27] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:36:28] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 33 32 
+[2025/12/19 23:36:28] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:36:29] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 33 32 
+[2025/12/19 23:36:29] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:36:29] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_A em espera ha 3140ms (Estado: WAITING)
+[2025/12/19 23:36:30] [ALERTA CIBERSEGURANÇA] DEADLOCK (DoS) Confirmado! Threads IDs: 33 32 
+[2025/12/19 23:36:30] --- Wait-for Graph Dump ---
+Transacao_B aguarda por: Transacao_A 
+Transacao_A aguarda por: Transacao_B 
+
+[2025/12/19 23:36:30] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_A em espera ha 4154ms (Estado: WAITING)
+[2025/12/19 23:36:30] [ALERTA CIBERSEGURANÇA] STARVATION (Service Delay): Transacao_B em espera ha 3035ms (Estado: WAITING)
+[2025/12/19 23:36:35] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 23:36:35] Thread Transacao_B: 1 acessos
+[2025/12/19 23:36:35] Thread Transacao_A: 1 acessos
+[2025/12/19 23:36:35] --- Ordem de Eventos (Amostra) ---
+[2025/12/19 23:36:35] [1766187386700] Transacao_A obteve DB:Pacientes
+[2025/12/19 23:36:35] [1766187386700] Transacao_B obteve DB:Historico
+[2025/12/19 23:40:37] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 23:40:40] [ACESSO] Medico_1 -> StockSangue(Leitura/Escrita)
+[2025/12/19 23:40:40] [ACESSO] Medico_2 -> StockSangue(Leitura/Escrita)
+[2025/12/19 23:40:48] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 23:40:48] Thread Medico_1: 1 acessos
+[2025/12/19 23:40:48] Thread Medico_2: 1 acessos
+[2025/12/19 23:40:48] --- Ordem de Eventos (Amostra) ---
+[2025/12/19 23:40:48] [1766187640088] Medico_1 obteve StockSangue(Leitura/Escrita)
+[2025/12/19 23:40:48] [1766187640097] Medico_2 obteve StockSangue(Leitura/Escrita)

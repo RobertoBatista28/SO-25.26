@@ -13,8 +13,8 @@ public class RaceConditionScenario {
         StockSangue stock = new StockSangue(inicial);
         Runnable r = () -> stock.retirarInseguro(pedido);
 
-        Thread t1 = new Thread(r, "Atacante_1");
-        Thread t2 = new Thread(r, "Atacante_2");
+        Thread t1 = new Thread(r, "Medico_A");
+        Thread t2 = new Thread(r, "Medico_B");
         t1.start(); t2.start();
         
         try { t1.join(); t2.join(); } catch(Exception e){}

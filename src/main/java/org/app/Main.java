@@ -21,6 +21,16 @@ public class Main {
     public static void main(String[] args) {
         MonitorEBPF monitor = MonitorEBPF.getInstance();
         monitor.start();
+        
+        // Aguardar que o monitor seja inicializado antes de mostrar o menu
+        while (!monitor.isInicializado()) {
+            try {
+                Thread.sleep(50);  // Pequena pausa para evitar busy waiting
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
 
         while (true) {
             System.out.println("\n==============================================");
@@ -64,7 +74,7 @@ public class Main {
         System.out.println("1. Stock de Sangue (Synchronized)");
         System.out.println("2. Aceder a BD de Pacientes (Ordenação de Recursos)");
         System.out.println("3. Atendimentos de Pacientes (Fair Lock)");
-        System.out.println("4. Cirurgia (Ordem de Execução - Join)");
+        System.out.println("4. Cirurgia (Ordem de Execução - Semáforos)");
         System.out.println("0. Voltar");
         System.out.print("Escolha: ");
         String op = scanner.nextLine();

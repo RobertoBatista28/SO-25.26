@@ -60,5 +60,12 @@ public class DeadlockScenario {
 
         monitor.untrack(t1);
         monitor.untrack(t2);
+
+        try {
+            t1.join();
+            t2.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

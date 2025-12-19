@@ -26,8 +26,8 @@ public class Main {
             System.out.println("\n==============================================");
             System.out.println("   SIMULADOR HOSPITALAR (Sistemas Operativos)");
             System.out.println("==============================================");
-            System.out.println("1. MENU SOLUÇÕES (Correções - Blue Team)");
-            System.out.println("2. MENU PROBLEMAS (Ataques - Red Team)");
+            System.out.println("1. MENU SEGURO (Correções)");
+            System.out.println("2. MENU INSEGURO (Falhas)");
             System.out.println("3. Gestão de Stock (Manual)");
             System.out.println("0. Sair");
             System.out.print("Escolha: ");
@@ -51,10 +51,10 @@ public class Main {
 
     private static void menuSolucoes() {
         System.out.println("\n--- SOLUÇÕES E CORREÇÕES ---");
-        System.out.println("1. Solução Race Condition (Synchronized)");
-        System.out.println("2. Solução Deadlock (Ordenação de Recursos)");
-        System.out.println("3. Solução Starvation (Fair Lock)");
-        System.out.println("4. Solução Ordem Execução (Join)");
+        System.out.println("1. Stock de Sangue (Synchronized)");
+        System.out.println("2. Aceder a BD de Pacientes (Ordenação de Recursos)");
+        System.out.println("3. Atendimentos de Pacientes (Fair Lock)");
+        System.out.println("4. Cirurgia (Ordem de Execução - Join)");
         System.out.println("0. Voltar");
         System.out.print("Escolha: ");
         String op = scanner.nextLine();
@@ -70,10 +70,10 @@ public class Main {
 
     private static void menuProblemas() {
         System.out.println("\n--- CENÁRIOS DE FALHAS (ATAQUES) ---");
-        System.out.println("1. Race Condition (Corrupção de Stock)");
-        System.out.println("2. Deadlock (DoS em Base de Dados)");
-        System.out.println("3. Starvation (Flood na Triagem)");
-        System.out.println("4. Ordem Conflituante (Erro Protocolo)");
+        System.out.println("1. Stock de Sangue (Race Condition - Corrupção de Stock)");
+        System.out.println("2. Aceder a BD de Pacientes (Deadlock - DoS em Base de Dados)");
+        System.out.println("3. Atendimentos de Pacientes (Starvation - Flood na Triagem)");
+        System.out.println("4. Cirurgia (Ordem Conflituante - Erro Protocolo)");
         System.out.println("0. Voltar");
         System.out.print("Escolha: ");
         String op = scanner.nextLine();

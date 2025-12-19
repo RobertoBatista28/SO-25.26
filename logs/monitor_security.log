@@ -68,3 +68,154 @@ Transacao_B aguarda por: Transacao_A
 [2025/12/18 18:38:21] ==============================
 
 [2025/12/18 18:38:21] [INFO] Monitor Parado.
+[2025/12/19 00:36:45] [INFO] Monitor Iniciado.
+[2025/12/19 00:36:45] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 00:37:07] [ALERT] POSSÍVEL RACE CONDITION: Atacante_1 e Atacante_2 acederam 'StockSangue:retirarInseguro' em 0ms
+[2025/12/19 00:37:35] [EVENTO] Acesso garantido: Medico_1 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 00:37:35] [EVENTO] Acesso garantido: Medico_2 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 00:38:22] [TIMING] Transacao_B aguardou 0ms por DB:Historico
+[2025/12/19 00:38:22] [TIMING] Transacao_A aguardou 1ms por DB:Pacientes
+[2025/12/19 00:38:22] [EVENTO] Acesso garantido: Transacao_A -> DB:Pacientes (Total: 1)
+[2025/12/19 00:38:22] [EVENTO] Acesso garantido: Transacao_B -> DB:Historico (Total: 1)
+[2025/12/19 00:38:22] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 00:38:22] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 00:38:23] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 00:38:23] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 00:38:24] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 00:38:24] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 00:38:25] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 00:38:25] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 00:38:25] [ALERT] STARVATION: Transacao_A espera ha 3040ms.
+[2025/12/19 00:38:25] [ALERT] STARVATION: Transacao_B espera ha 3040ms.
+[2025/12/19 00:38:26] [ALERT] DEADLOCK DETETADO! Espera Circular entre 2 threads.
+[2025/12/19 00:38:26] 
+=== Wait-for Graph ===
+Transacao_A aguarda por: Transacao_B 
+Transacao_B aguarda por: Transacao_A 
+
+[2025/12/19 00:38:26] [ALERT] STARVATION: Transacao_A espera ha 4051ms.
+[2025/12/19 00:38:26] [ALERT] STARVATION: Transacao_B espera ha 4051ms.
+[2025/12/19 00:40:19] [ALERT] STARVATION: Vitima_Baixa_Prio espera ha 3022ms.
+[2025/12/19 00:40:20] [ALERT] STARVATION: Vitima_Baixa_Prio espera ha 4036ms.
+[2025/12/19 03:32:22] [INFO] Monitor Iniciado.
+[2025/12/19 03:32:22] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:35:16] [INFO] Monitor Iniciado.
+[2025/12/19 03:35:16] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:40:10] [INFO] Monitor Iniciado.
+[2025/12/19 03:40:10] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:40:21] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 03:40:21] (Nenhum acesso registado)
+[2025/12/19 03:40:21] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 03:40:21] (Nenhum tempo registado)
+[2025/12/19 03:40:21] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 03:40:21] (Nenhuma obtenção registada)
+[2025/12/19 03:40:21] ==============================
+
+[2025/12/19 03:40:21] [INFO] Monitor Parado.
+[2025/12/19 03:41:04] [INFO] Monitor Iniciado.
+[2025/12/19 03:41:04] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:41:12] [EVENTO] Acesso garantido: Medico_2 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 03:41:12] [EVENTO] Acesso garantido: Medico_1 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 03:41:15] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 03:41:15]   Medico_1: 1 acessos
+[2025/12/19 03:41:15]   Medico_2: 1 acessos
+[2025/12/19 03:41:15] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 03:41:15] (Nenhum tempo registado)
+[2025/12/19 03:41:15] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 03:41:15]   [1766115672641] Medico_2 obteve StockSangue(Leitura/Escrita)
+[2025/12/19 03:41:15]   [1766115672642] Medico_1 obteve StockSangue(Leitura/Escrita)
+[2025/12/19 03:41:15] ==============================
+
+[2025/12/19 03:41:15] [INFO] Monitor Parado.
+[2025/12/19 03:42:25] [INFO] Monitor Iniciado.
+[2025/12/19 03:42:25] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:42:30] [TIMING] Solucao_A aguardou 1ms por DB:Pacientes
+[2025/12/19 03:42:30] [EVENTO] Acesso garantido: Solucao_A -> DB:Pacientes (Total: 1)
+[2025/12/19 03:42:30] [TIMING] Solucao_A aguardou 0ms por DB:Historico
+[2025/12/19 03:42:30] [EVENTO] Acesso garantido: Solucao_A -> DB:Historico (Total: 2)
+[2025/12/19 03:42:30] [TIMING] Solucao_B aguardou 19ms por DB:Pacientes
+[2025/12/19 03:42:30] [EVENTO] Acesso garantido: Solucao_B -> DB:Pacientes (Total: 1)
+[2025/12/19 03:42:30] [TIMING] Solucao_B aguardou 0ms por DB:Historico
+[2025/12/19 03:42:30] [EVENTO] Acesso garantido: Solucao_B -> DB:Historico (Total: 2)
+[2025/12/19 03:42:41] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 03:42:41]   Solucao_B: 2 acessos
+[2025/12/19 03:42:41]   Solucao_A: 2 acessos
+[2025/12/19 03:42:41] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 03:42:41]   Solucao_B: 2 acessos | Média: 9ms | Min: 0ms | Max: 19ms
+[2025/12/19 03:42:41]   Solucao_A: 2 acessos | Média: 0ms | Min: 0ms | Max: 1ms
+[2025/12/19 03:42:41] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 03:42:41]   [1766115750605] Solucao_A obteve DB:Pacientes
+[2025/12/19 03:42:41]   [1766115750621] Solucao_A obteve DB:Historico
+[2025/12/19 03:42:41]   [1766115750623] Solucao_B obteve DB:Pacientes
+[2025/12/19 03:42:41]   [1766115750637] Solucao_B obteve DB:Historico
+[2025/12/19 03:42:41] ==============================
+
+[2025/12/19 03:42:41] [INFO] Monitor Parado.
+[2025/12/19 03:42:48] [INFO] Monitor Iniciado.
+[2025/12/19 03:42:48] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:42:55] [TIMING] Solucao_A aguardou 1ms por DB:Pacientes
+[2025/12/19 03:42:55] [EVENTO] Acesso garantido: Solucao_A -> DB:Pacientes (Total: 1)
+[2025/12/19 03:42:55] [TIMING] Solucao_A aguardou 0ms por DB:Historico
+[2025/12/19 03:42:55] [EVENTO] Acesso garantido: Solucao_A -> DB:Historico (Total: 2)
+[2025/12/19 03:42:55] [TIMING] Solucao_B aguardou 25ms por DB:Pacientes
+[2025/12/19 03:42:55] [EVENTO] Acesso garantido: Solucao_B -> DB:Pacientes (Total: 1)
+[2025/12/19 03:42:55] [TIMING] Solucao_B aguardou 0ms por DB:Historico
+[2025/12/19 03:42:55] [EVENTO] Acesso garantido: Solucao_B -> DB:Historico (Total: 2)
+[2025/12/19 03:44:07] [INFO] Monitor Iniciado.
+[2025/12/19 03:44:07] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:44:18] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 03:44:18] (Nenhum acesso registado)
+[2025/12/19 03:44:18] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 03:44:18] (Nenhum tempo registado)
+[2025/12/19 03:44:18] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 03:44:18] (Nenhuma obtenção registada)
+[2025/12/19 03:44:18] ==============================
+
+[2025/12/19 03:44:18] [INFO] Monitor Parado.
+[2025/12/19 03:45:02] [INFO] Monitor Iniciado.
+[2025/12/19 03:45:02] [INFO] Algoritmo: Wait-for Graph + DFS para detecao de ciclos
+[2025/12/19 03:45:09] [EVENTO] Acesso garantido: Medico_1 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 03:45:09] [EVENTO] Acesso garantido: Medico_2 -> StockSangue(Leitura/Escrita) (Total: 1)
+[2025/12/19 03:45:16] [ALERT] POSSÍVEL RACE CONDITION: Atacante_1 e Atacante_2 acederam 'StockSangue:retirarInseguro' em 0ms
+[2025/12/19 03:45:19] 
+=== ESTATÍSTICAS DE ACESSOS ===
+[2025/12/19 03:45:19]   Medico_1: 1 acessos
+[2025/12/19 03:45:19]   Medico_2: 1 acessos
+[2025/12/19 03:45:19] 
+=== TEMPOS DE ESPERA POR SECÇÃO CRÍTICA ===
+[2025/12/19 03:45:19] (Nenhum tempo registado)
+[2025/12/19 03:45:19] 
+=== ORDEM DE OBTENÇÃO DE RECURSOS ===
+[2025/12/19 03:45:19]   [1766115909925] Medico_1 obteve StockSangue(Leitura/Escrita)
+[2025/12/19 03:45:19]   [1766115909926] Medico_2 obteve StockSangue(Leitura/Escrita)
+[2025/12/19 03:45:19] ==============================
+
+[2025/12/19 03:45:19] [INFO] Monitor Parado.

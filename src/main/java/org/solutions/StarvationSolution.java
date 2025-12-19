@@ -20,7 +20,7 @@ public class StarvationSolution {
         vitima.setPriority(Thread.MIN_PRIORITY);
 
         // Encher fila
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 300; i++) {
             new Thread(() -> {
                 fairLock.lock();
                 try {

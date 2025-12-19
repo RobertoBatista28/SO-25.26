@@ -38,7 +38,7 @@ public class StarvationScenario {
 
         // 2. Lançar o Flood (Ataque) - Loop Infinito
         System.out.println("Ataque: Iniciando flood de alta prioridade...");
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 300; i++) {
             Thread spam = new Thread(() -> {
                 try {
                     while (!Thread.currentThread().isInterrupted()) {

@@ -4,3 +4,12 @@
 [2025/12/16 14:00:07] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
 [2025/12/19 19:56:00] [INFO] Monitor eBPF Iniciado.
 [2025/12/19 19:56:04] [ALERTA CIBERSEGURANÇA] RACE CONDITION detetada em 'StockSangue:retirarInseguro'. Threads concorrentes: 2
+[2025/12/19 22:28:31] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 22:28:34] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 22:28:34] --- Ordem de Exclusividade (Amostra) ---
+[2025/12/19 22:28:34] 
+=== ESTATÍSTICAS FINAIS ===
+[2025/12/19 22:28:34] --- Ordem de Exclusividade (Amostra) ---
+[2025/12/19 22:50:39] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 22:50:42] [ALERTA CIBERSEGURANÇA] RACE CONDITION detetada em 'StockSangue:retirarInseguro'. Threads concorrentes: 2

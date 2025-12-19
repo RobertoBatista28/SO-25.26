@@ -2,3 +2,5 @@
 [2025/12/09 17:36:15] [INFO] Sistema de Monitorização Parado.
 [2025/12/10 12:01:54] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
 [2025/12/16 14:00:07] [INFO] Sistema de Monitorização Iniciado (eBPF Style).
+[2025/12/19 19:56:00] [INFO] Monitor eBPF Iniciado.
+[2025/12/19 19:56:04] [ALERTA CIBERSEGURANÇA] RACE CONDITION detetada em 'StockSangue:retirarInseguro'. Threads concorrentes: 2

@@ -20,10 +20,14 @@ public class LoggerMonitor {
 
     public synchronized void log(String message) {
         String entry = String.format("[%s] %s", dtf.format(LocalDateTime.now()), message);
-        // System.out.println(entry);
+        
+        // Gerar alerta no terminal para o utilizador
+        System.out.println(entry);
+        
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true))) {
             writer.write(entry);
             writer.newLine();
+            writer.flush(); // Garante escrita imediata no disco
         } catch (IOException e) {
             System.err.println("Erro Log: " + e.getMessage());
         }

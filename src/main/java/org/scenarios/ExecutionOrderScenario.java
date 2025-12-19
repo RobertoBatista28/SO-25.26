@@ -1,29 +1,43 @@
 package org.scenarios;
 
+import org.monitor.MonitorEBPF;
+
 public class ExecutionOrderScenario {
     public static void run() {
-        System.out.println("\n[CENÁRIO] ORDEM CONFLITUANTE");
-        Thread anestesia = new Thread(() -> {
+        System.out.println("\n[CENÁRIO] ORDEM DE EXECUÇÃO (Anestesia vs Cirurgia)");
+        MonitorEBPF monitor = MonitorEBPF.getInstance();
+
+        Thread t1 = new Thread(() -> {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                System.err.println("Erro: Anestesia interrompida!");
                 Thread.currentThread().interrupt();
             }
-            System.out.println("Anestesia: Completa.");
-        });
-        Thread cirurgia = new Thread(() -> System.out.println("Cirurgia: Corte realizado."));
+            monitor.registarAcesso(Thread.currentThread(), "Procedimento_Anestesia");
+            System.out.println("Anestesia: Aplicada.");
+        }, "Anestesia");
 
-        // Erro: Iniciar cirurgia sem esperar anestesia
-        anestesia.start();
-        cirurgia.start();
+        Thread t2 = new Thread(() -> {
+            monitor.registarAcesso(Thread.currentThread(), "Procedimento_Cirurgia");
+            System.out.println("Cirurgia: Incisão feita.");
+        }, "Cirurgia");
 
-        // Apenas para garantir que o menu não volta imediatamente (opcional)
+        monitor.track(t1);
+        monitor.track(t2);
+
+        // Erro propositado: Iniciar sem coordenação
+        t1.start();
+        t2.start();
+
         try {
-            anestesia.join();
-            cirurgia.join();
+            t1.join();
+            t2.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
+
+        System.out.println("(Verifique no log se a Cirurgia ocorreu antes da Anestesia)");
+        monitor.untrack(t1);
+        monitor.untrack(t2);
     }
 }

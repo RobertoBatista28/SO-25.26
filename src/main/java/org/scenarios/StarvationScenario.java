@@ -4,25 +4,31 @@ import org.monitor.MonitorEBPF;
 
 public class StarvationScenario {
     public static void run() {
-        System.out.println("\n[CENÁRIO] STARVATION (Injustiça)");
+        System.out.println("\n[CENÁRIO] STARVATION (Service Delay)");
         MonitorEBPF monitor = MonitorEBPF.getInstance();
-        Object recurso = new Object();
+        Object recurso = new Object(); // Recurso intrínseco para teste
 
+        // Thread Vítima (Baixa Prioridade)
         Thread vitima = new Thread(() -> {
+            System.out.println("Vítima: Tentar obter recurso...");
             synchronized (recurso) {
+                monitor.registarAcesso(Thread.currentThread(), "Recurso_Unico");
                 System.out.println("Vítima: Consegui!");
             }
         }, "Vitima_Baixa_Prio");
+
         vitima.setPriority(Thread.MIN_PRIORITY);
         monitor.track(vitima);
 
         System.out.println("A lançar flood de alta prioridade...");
-        for (int i = 0; i < 500; i++) {
+
+        // Criar spam suficiente para bloquear o recurso por > Config.STARVATION_THRESHOLD_MS
+        for (int i = 0; i < 300; i++) {
             Thread spam = new Thread(() -> {
                 synchronized (recurso) {
                     try {
-                        Thread.sleep(10);
-                    } catch(InterruptedException e) {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }
                 }
@@ -32,11 +38,14 @@ public class StarvationScenario {
         }
 
         vitima.start();
+
+        // Aguardar tempo suficiente para o Monitor detetar
         try {
-            Thread.sleep(5000);
-        } catch(InterruptedException e) {
-            e.printStackTrace();
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
+
         monitor.untrack(vitima);
     }
 }

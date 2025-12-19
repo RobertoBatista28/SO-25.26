@@ -14,13 +14,13 @@ public class BaseDados {
 
     public void bloqueioLeitura() {
         try {
-            // solicitar recurso
+            // [Monitor] Registo no Grafo de Espera (Request Edge)
             MonitorEBPF.getInstance().getDetector().registarEspera(Thread.currentThread(), lock);
             MonitorEBPF.getInstance().registarInicioEspera(Thread.currentThread(), "DB:" + nomeTabela);
 
-            lock.lockInterruptibly(); // Tenta adquirir o recurso
-
-            // utilizar recurso
+            lock.lockInterruptibly();
+            
+            // [Monitor] Registo no Grafo de Espera (Allocation Edge - já obteve)
             MonitorEBPF.getInstance().getDetector().registarAlocacao(Thread.currentThread(), lock);
             MonitorEBPF.getInstance().registarAcesso(Thread.currentThread(), "DB:" + nomeTabela);
 
@@ -33,7 +33,7 @@ public class BaseDados {
 
     public void desbloquear() {
         if (((ReentrantLock) lock).isHeldByCurrentThread()) {
-            // libertar recurso
+            // [Monitor] Limpeza do Grafo
             MonitorEBPF.getInstance().getDetector().registarLibertacao(Thread.currentThread(), lock);
 
             lock.unlock();

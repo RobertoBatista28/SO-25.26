@@ -12,7 +12,6 @@ public class StockSangue {
     public synchronized void adicionar(int qtd) {
         // Hook de monitorização
         MonitorEBPF.getInstance().registarAcesso(Thread.currentThread(), "StockSangue(Escrita)");
-
         this.unidades += qtd;
         System.out.println("[STOCK] Adicionado " + qtd + ". Total: " + unidades);
     }
@@ -32,12 +31,13 @@ public class StockSangue {
 
     // FALHA (Inseguro): Simula latência para causar Race Condition
     public void retirarInseguro(int qtd) {
-        // Registar acesso não sincronizado (para deteção)
-        MonitorEBPF.getInstance().registarAcessoNaoSincronizado(Thread.currentThread(), "StockSangue:retirarInseguro");
+        // [eBPF Probe] Sinaliza entrada em zona de perigo
+        MonitorEBPF.getInstance().probeUnsafeEnter("StockSangue:retirarInseguro");
 
-        // Secção Crítica Vulnerável
+        // Secção Crítica Vulnerável (Check-then-Act sem proteção)
         if (unidades >= qtd) {
             try {
+                // Simula processamento para garantir que ocorre interleaving de threads
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -46,6 +46,9 @@ public class StockSangue {
             unidades -= qtd;
             System.out.println("-> " + Thread.currentThread().getName() + " retirou " + qtd + ". Stock: " + unidades);
         }
+        
+        // [eBPF Probe] Sinaliza saída da zona de perigo
+        MonitorEBPF.getInstance().probeUnsafeExit("StockSangue:retirarInseguro");
     }
 
     public int getUnidades() {

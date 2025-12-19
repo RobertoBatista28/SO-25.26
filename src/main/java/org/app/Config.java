@@ -2,7 +2,7 @@ package org.app;
 
 public class Config {
     // Caminho para guardar os logs (tem de ser public static final)
-    public static final String LOG_FILE = "logs/monitor_security.log";
+    public static final String LOG_FILE = "src/main/java/logs/monitor_security.log";
 
     // Intervalo de verificação do monitor (ms)
     public static final int MONITOR_INTERVAL_MS = 1000;

@@ -13,31 +13,27 @@ public class EquipamentoMedico {
     }
 
     public void usar() {
-        // MUDANÇA IMPORTANTE: lockInterruptibly permite que a thread acorde se levarmos um "interrupt"
         try {
-            // Registar que a thread está à espera do recurso
+            // [Monitor] Registar que a thread quer o recurso
             MonitorEBPF.getInstance().getDetector().registarEspera(Thread.currentThread(), lock);
             MonitorEBPF.getInstance().registarInicioEspera(Thread.currentThread(), "Equipamento:" + nome);
             
             lock.lockInterruptibly();
             
-            // Registar que a thread obteve o recurso (para deteção de deadlock)
+            // [Monitor] Registar que a thread obteve o recurso
             MonitorEBPF.getInstance().getDetector().registarAlocacao(Thread.currentThread(), lock);
-            
-            // Registar acesso para estatísticas (número de acessos + ordem)
             MonitorEBPF.getInstance().registarAcesso(Thread.currentThread(), "Equipamento:" + nome);
             
             System.out.println(" -> " + Thread.currentThread().getName() + " bloqueou o " + nome);
         } catch (InterruptedException e) {
-            System.out.println(" -> " + Thread.currentThread().getName() + " foi interrompido enquanto tentava pegar o " + nome);
-            Thread.currentThread().interrupt(); // Repor estado de interrupção
+            System.out.println(" -> " + Thread.currentThread().getName() + " foi interrompido no " + nome);
+            Thread.currentThread().interrupt(); 
         }
     }
 
     public void libertar() {
-        // Só libertamos se tivermos o lock
         if (((ReentrantLock)lock).isHeldByCurrentThread()) {
-            // Registar libertação do recurso
+            // [Monitor] Registar libertação
             MonitorEBPF.getInstance().getDetector().registarLibertacao(Thread.currentThread(), lock);
             
             lock.unlock();
@@ -45,7 +41,5 @@ public class EquipamentoMedico {
         }
     }
 
-    public String getNome() { 
-        return nome; 
-    }
+    public String getNome() { return nome; }
 }

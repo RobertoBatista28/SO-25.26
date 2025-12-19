@@ -1,7 +1,6 @@
 package org.scenarios;
 
 import java.util.Scanner;
-
 import org.monitor.MonitorEBPF;
 import org.resources.BaseDados;
 
@@ -18,9 +17,8 @@ public class DeadlockScenario {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.err.println("Transacao_A interrompida.");
             }
-            hist.bloqueioLeitura(); // Bloqueia
+            hist.bloqueioLeitura(); // Bloqueia aqui à espera de t2
             hist.desbloquear();
             pac.desbloquear();
         }, "Transacao_A");
@@ -31,30 +29,35 @@ public class DeadlockScenario {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.err.println("Transacao_B interrompida.");
             }
-            pac.bloqueioLeitura(); // Bloqueia
+            pac.bloqueioLeitura(); // Bloqueia aqui à espera de t1
             pac.desbloquear();
             hist.desbloquear();
         }, "Transacao_B");
 
         monitor.track(t1);
         monitor.track(t2);
+
         System.out.println("Pressione ENTER para lançar deadlock...");
-        scanner.nextLine();
+        if (scanner.hasNextLine())
+            scanner.nextLine();
+
         t1.start();
         t2.start();
 
+        System.out.println("A aguardar deteção pelo Monitor (5s)...");
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } // Espera monitor detetar
-        if (t1.isAlive()) {
-            System.out.println("Sistema encravado! A matar processos...");
+            Thread.currentThread().interrupt();
+        }
+
+        if (t1.isAlive() || t2.isAlive()) {
+            System.out.println("Sistema encravado! Forçando recuperação (Terminação)...");
             t1.interrupt();
             t2.interrupt();
         }
+
         monitor.untrack(t1);
         monitor.untrack(t2);
     }
